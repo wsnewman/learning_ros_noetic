@@ -1,10 +1,10 @@
 #ifndef XFORM_UTILS_H_
 #define XFORM_UTILS_H_
 
-#include <Eigen/Eigen> //for the Eigen library
-#include <Eigen/Dense>
-#include <Eigen/Geometry>
-#include <Eigen/Eigenvalues>
+#include <eigen3/Eigen/Eigen> //for the Eigen library
+#include <eigen3/Eigen/Dense>
+#include <eigen3/Eigen/Geometry>
+#include <eigen3/Eigen/Eigenvalues>
 #include <geometry_msgs/TransformStamped.h>
 #include <math.h>
 #include <stdlib.h>
