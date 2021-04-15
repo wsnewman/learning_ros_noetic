@@ -653,7 +653,7 @@ Eigen::Affine3d ArmMotionInterface::xform_gripper_pose_to_affine_flange_wrt_tors
 // also, frame_id of this pose needs to get converted to "torso" frame
 bool ArmMotionInterface::plan_path_current_to_goal_gripper_pose() {
     ROS_INFO("computing a cartesian trajectory to gripper goal pose");   
-    //ROS_WARN("plan_path_current_to_goal_gripper_pose: goal_gripper_pose_");
+    ROS_WARN("plan_path_current_to_goal_gripper_pose: goal_gripper_pose_");
     goal_gripper_pose_ = cart_goal_.des_pose_gripper;
     xformUtils.printStampedPose(goal_gripper_pose_);
     goal_flange_affine_ = xform_gripper_pose_to_affine_flange_wrt_torso(goal_gripper_pose_);

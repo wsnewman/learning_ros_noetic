@@ -98,7 +98,7 @@ void SteeringController::initializePublishers()
     ROS_INFO("Initializing Publishers: cmd_vel and cmd_vel_stamped");
     cmd_publisher_ = nh_.advertise<geometry_msgs::Twist>("cmd_vel", 1, true); // talks to the robot!
     cmd_publisher2_ = nh_.advertise<geometry_msgs::TwistStamped>("cmd_vel_stamped",1, true); //alt topic, includes time stamp
-    //steering_errs_publisher_ =  nh_.advertise<std_msgs::Float32MultiArray>("steering_errs",1, true);
+    steering_errs_publisher_ =  nh_.advertise<std_msgs::Float32MultiArray>("steering_errs",1, true);
 }
 
 
@@ -213,18 +213,24 @@ void SteeringController::lin_steering_algorithm() {
     //std::cout<<des_xy_vec_<<std::endl;
     //std::cout<<odom_xy_vec_<<std::endl;
     // let's put these in a message to publish, for rqt_plot to display
-    //steering_errs_.data.clear();
-    //steering_errs_.data.push_back(lateral_err);
-    //steering_errs_.data.push_back(heading_err); 
-    //steering_errs_.data.push_back(trip_dist_err);
+    steering_errs_.data.clear();
+    steering_errs_.data.push_back(lateral_err);
+    steering_errs_.data.push_back(heading_err); 
+    steering_errs_.data.push_back(trip_dist_err);
+    steering_errs_.data.push_back(des_state_phi_);
+    steering_errs_.data.push_back(odom_phi_);
 
-    //steering_errs_publisher_.publish(steering_errs_); // suitable for plotting w/ rqt_plot
+    steering_errs_publisher_.publish(steering_errs_); // suitable for plotting w/ rqt_plot
     //END OF DEBUG STUFF
     
      // do something clever with this information     
-    controller_speed = des_state_vel_ + K_TRIP_DIST*trip_dist_err; //speed up/slow down to null out 
+    controller_speed = 0; //DEBUG/TUNE; des_state_vel_ + K_TRIP_DIST*trip_dist_err; //speed up/slow down to null out 
+        controller_speed = 0; //  DEBUG!!!  des_state_vel_ + K_TRIP_DIST*trip_dist_err; //speed up/slow down to null out 
+
     //controller_omega = des_state_omega_; //ditto
-    controller_omega = des_state_omega_ + K_PHI*heading_err + K_DISP*lateral_err;
+    //controller_omega = des_state_omega_ + K_PHI*heading_err + K_DISP*lateral_err;
+        controller_omega = des_state_omega_ + K_PHI*heading_err + 4.0*(des_state_omega_-odom_omega_); //TUNE K_PHI... + K_DISP*lateral_err;
+
     
     controller_omega = MAX_OMEGA*sat(controller_omega/MAX_OMEGA); // saturate omega command at specified limits
     

@@ -52,6 +52,16 @@ SteeringController::SteeringController(ros::NodeHandle* nodehandle):nh_(*nodehan
 
     twist_cmd2_.twist = twist_cmd_; // copy the twist command into twist2 message
     twist_cmd2_.header.stamp = ros::Time::now(); // look up the time and put it in the header  
+    des_state_x_ = g_odom_tf_x;
+    des_state_y_ = g_odom_tf_y;
+    des_state_phi_ = g_odom_tf_phi;
+
+    des_state_vel_ = 0;
+    des_state_omega_ = 0;
+
+    //des_state_quat_ = des_state_rcvd.pose.pose.orientation;
+    //odom publishes orientation as a quaternion.  Convert this to a simple heading
+
 
 }
 
@@ -186,6 +196,7 @@ void SteeringController::lin_steering_algorithm() {
     
     
     // DEBUG OUTPUT...
+    ROS_INFO("g_odom_tf_x, g_odom_tf_y,dx,dy = %f, %f, %f, %f",g_odom_tf_x, g_odom_tf_y,dx,dy);
     ROS_INFO("des_state_phi, odom_phi, heading err = %f, %f, %f", des_state_phi_,odom_phi_,heading_err);
     ROS_INFO("lateral err, trip dist err = %f, %f",lateral_err,trip_dist_err);
     // DEFINITELY COMMENT OUT ALL cout<< OPERATIONS FOR REAL-TIME CODE
@@ -230,6 +241,8 @@ int main(int argc, char** argv)
         ros::Duration(0.5).sleep();
         ros::spinOnce();
     }
+
+
 
     ROS_INFO("main: instantiating an object of type SteeringController");
     SteeringController steeringController(&nh);  //instantiate an ExampleRosClass object and pass in pointer to nodehandle for constructor to use

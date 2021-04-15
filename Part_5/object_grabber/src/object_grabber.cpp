@@ -487,7 +487,11 @@ int  ObjectGrabber::dropoff_object(int object_id,geometry_msgs::PoseStamped desi
     ROS_INFO("planning move to approach pose");
     ROS_INFO("planning motion of gripper to approach pose at: ");
     xformUtils.printPose(approach_pose_);
-    rtn_val=arm_motion_commander_.plan_path_current_to_goal_gripper_pose(approach_pose_);
+    //rtn_val=arm_motion_commander_.plan_path_current_to_goal_gripper_pose(approach_pose_);
+    //if (rtn_val != cartesian_planner::cart_moveResult::SUCCESS) return rtn_val; //return error code
+    
+    //nope: do this in joint space:
+      rtn_val=arm_motion_commander_.plan_jspace_path_current_to_cart_gripper_pose(approach_pose_);
     if (rtn_val != cartesian_planner::cart_moveResult::SUCCESS) return rtn_val; //return error code
         
     //send command to execute planned motion

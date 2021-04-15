@@ -25,7 +25,9 @@ catkin_simple()
 # SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
 
 # Libraries: uncomment the following and edit arguments to create a new library
-cs_add_library(odom_tf src/OdomTf.cpp)   
+#cs_add_library(odom_tf src/OdomTf.cpp)   
+cs_add_library(odom_tf src/OdomTf_real.cpp)   
+
 
 # Executables: uncomment the following and edit arguments to compile new nodes
 # may add more of these lines for more nodes from the same package

@@ -145,6 +145,7 @@ bool CartTrajPlanner::cartesian_path_planner(Vectorq7x1 q_start, Eigen::Affine3d
     Eigen::Affine3d a_flange_des, a_flange_start;
     Eigen::Matrix3d R_des = a_flange_end.linear();
     a_flange_start = baxter_fwd_solver_.fwd_kin_flange_wrt_torso_solve(q_start);
+    ROS_INFO_STREAM("fwd kin from q_start: " << a_flange_start.translation().transpose() << endl);
     cout << "fwd kin from q_start: " << a_flange_start.translation().transpose() << endl;
     cout << "fwd kin from q_start R: " << endl;
     cout << a_flange_start.linear() << endl;
@@ -161,7 +162,9 @@ bool CartTrajPlanner::cartesian_path_planner(Vectorq7x1 q_start, Eigen::Affine3d
     p_start = a_flange_start.translation();
     p_end = a_flange_des.translation();
     del_p = p_end - p_start;
+    //ROS_INFO_STREAM("p_start: " << p_start.transpose() << endl);
     cout << "p_start: " << p_start.transpose() << endl;
+    //ROS_INFO_STREAM("p_end: " << p_end.transpose() << endl);
     cout << "p_end: " << p_end.transpose() << endl;
     cout << "del_p: " << del_p.transpose() << endl;
     //double dp_scalar = CARTESIAN_PATH_SAMPLE_SPACING;

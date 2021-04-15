@@ -26,10 +26,14 @@ int main(int argc, char** argv) {
     Baxter_traj_streamer baxter_traj_streamer(&nh); //instantiate a Baxter_traj_streamer object and pass in pointer to nodehandle for constructor to use  
     // warm up the joint-state callbacks;
     cout << "warming up callbacks..." << endl;
-    for (int i = 0; i < 100; i++) {
+    bool got_msg= false;
+    while (!got_msg){
+    // for (int i = 0; i < 100; i++) {
         ros::spinOnce();
         //cout<<"spin "<<i<<endl;
         ros::Duration(0.01).sleep();
+        q_vec_right_arm=baxter_traj_streamer.get_q_vec_right_arm_Xd();
+        if (q_vec_right_arm[0]<10) got_msg=true;
     }
 
     //get current pose of left and right arms:

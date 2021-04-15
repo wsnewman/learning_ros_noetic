@@ -37,7 +37,7 @@ int main(int argc, char **argv) {
     geometry_msgs::PoseStamped pose_stamped;
     pose_stamped.header.frame_id = "world";
     geometry_msgs::Pose pose;
-    pose.position.x = 3.0; // say desired x-coord is 3
+    pose.position.x = 1.0; // say desired x-coord is 3
     pose.position.y = 0.0;
     pose.position.z = 0.0; // let's hope so!
     quat = convertPlanarPhi2Quaternion(0);
@@ -45,7 +45,7 @@ int main(int argc, char **argv) {
     pose_stamped.pose = pose;
     path_srv.request.path.poses.push_back(pose_stamped);
  
-    pose.position.y = 3.0;
+    pose.position.y = -1.0;
     pose_stamped.pose = pose;
     path_srv.request.path.poses.push_back(pose_stamped);
 

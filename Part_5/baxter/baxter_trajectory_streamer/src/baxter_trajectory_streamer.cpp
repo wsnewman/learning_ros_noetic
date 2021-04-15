@@ -36,6 +36,7 @@ Baxter_traj_streamer::Baxter_traj_streamer(ros::NodeHandle* nodehandle){
     
     q_vec_right_arm_Xd_.resize(7);
     q_vec_left_arm_Xd_.resize(7);
+    q_vec_right_arm_Xd_[0]=10000;
 
 }
 
