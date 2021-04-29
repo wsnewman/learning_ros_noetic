@@ -39,6 +39,7 @@ cs_add_executable(example_object_grabber_action_client src/example_object_grabbe
 
 
 cs_add_executable(block_grabber_action_client src/block_grabber_action_client.cpp)
+cs_add_executable(block_grabber_action_client2 src/block_grabber_action_client2.cpp)
 cs_add_executable(set_baxter_gripper_param src/set_baxter_gripper_param.cpp)
 cs_add_executable(set_sticky_fingers_gripper_param src/set_sticky_fingers_gripper_param.cpp)
 #the following is required, if desire to link a node in this package with a library created in this same package

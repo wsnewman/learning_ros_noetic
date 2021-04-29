@@ -115,7 +115,7 @@ const double deg2rad = M_PI/180.0;
 //order: S0, S1, E0, E1, W0, W1, W2
 // 51, 60, 173.5, 150, 175.25, 120, 175.25
 //in simu, found right arm max angle about -1.65 to 1.65 rad...not close to spec of -141 to 51 deg
-const double DH_q_max1 = deg2rad*95; //141; //51;
+const double DH_q_max1 = 1.12; //wsn limit q0 to avoid elbow hitting face deg2rad*95; //141; //51;
 const double DH_q_max2 = deg2rad*60;
 const double DH_q_max3 = deg2rad*173.5;
 const double DH_q_max4 = deg2rad*150;
