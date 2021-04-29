@@ -1,5 +1,5 @@
  <launch>
-
+  <node pkg="baxter_tools" type="enable_robot.py" name="enable" args="-e" output="screen"/>
   <node pkg="object_grabber" type="set_baxter_gripper_param" name="set_baxter_gripper_param"  output="screen"/>   
   <include file="$(find cartesian_planner)/launch/baxter_static_transforms.launch"/>
      

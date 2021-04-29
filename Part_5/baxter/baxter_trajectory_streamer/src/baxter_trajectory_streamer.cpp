@@ -119,6 +119,9 @@ void Baxter_traj_streamer::jointStatesCb(const sensor_msgs::JointState& js_msg) 
         cout<<"CB: q_vec_right_arm: "<<q_vec_right_arm_Xd_.transpose()<<endl;       
        
     }
+    //don't trust this message to be arm joint angles; make sure the joint names make sense;
+    //here's a hack: believe the message if there are enough joint angles listed
+    if (js_msg.position.size() > 15) {
     // copy right-arm angles to global vec
     for (int i=0;i<7;i++)
     {
@@ -127,6 +130,7 @@ void Baxter_traj_streamer::jointStatesCb(const sensor_msgs::JointState& js_msg) 
         q_vec_right_arm_Xd_[i] = q_vec_right_arm_[i]; //alt data type: Eigen::VectorXd
         q_vec_left_arm_Xd_[i] = q_vec_left_arm_[i];
     }
+}
     //cout<<"CB: q_vec_right_arm: "<<q_vec_right_arm_.transpose()<<endl;
     
 }  
