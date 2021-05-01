@@ -73,9 +73,9 @@ arm10:
             in RPY (degree) [-178.379, -2.872, 47.486]
   */
     object_poseStamped.header.frame_id = "torso"; //set object pose; ref frame must be connected via tf
-    object_poseStamped.pose.position.x = 0.646; //0.414; //0.644; //0.800;
-    object_poseStamped.pose.position.y = -0.378; //-0.410; //0.015; //-0.401;
-    object_poseStamped.pose.position.z = -0.160; //fingertips touch tabletop at z=-0.180 w/rt torso
+    object_poseStamped.pose.position.x = 0.827; //0.414; //0.644; //0.800;
+    object_poseStamped.pose.position.y = -0.413; //-0.410; //0.015; //-0.401;
+    object_poseStamped.pose.position.z = -0.150; //fingertips touch tabletop at z=-0.180 w/rt torso
     object_poseStamped.pose.orientation.x = 0;
     object_poseStamped.pose.orientation.y = 0;
     object_poseStamped.pose.orientation.z = 0.707;
@@ -83,9 +83,9 @@ arm10:
     object_poseStamped.header.stamp = ros::Time::now();
 
     object_dropoff_poseStamped = object_poseStamped; //specify desired drop-off pose of object
-    object_dropoff_poseStamped.pose.position.x = 0.8;
-    object_dropoff_poseStamped.pose.position.y = -0.4;
-    object_dropoff_poseStamped.pose.position.z = -0.180; 
+    // object_dropoff_poseStamped.pose.position.x = 0.8;
+    // object_dropoff_poseStamped.pose.position.y = -0.4;
+    // object_dropoff_poseStamped.pose.position.z = -0.180; 
 }
 
 int main(int argc, char** argv) {
@@ -184,9 +184,23 @@ int main(int argc, char** argv) {
     ROS_INFO("waiting on result");
     finished_before_timeout = object_grabber_ac.waitForResult(ros::Duration(30.0));
 
+
     if (!finished_before_timeout) {
         ROS_WARN("giving up waiting on result ");
         return 1;
     }
+
+    //move to waiting pose
+    ROS_INFO("sending command to move to waiting pose");
+    object_grabber_goal.action_code = object_grabber::object_grabberGoal::MOVE_TO_WAITING_POSE;
+    object_grabber_ac.sendGoal(object_grabber_goal, &objectGrabberDoneCb);
+    finished_before_timeout = object_grabber_ac.waitForResult(ros::Duration(30.0));
+    if (!finished_before_timeout) {
+        ROS_WARN("giving up waiting on result ");
+        return 1;
+    }
+
     return 0;
+
+
 }
